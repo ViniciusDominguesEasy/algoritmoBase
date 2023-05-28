@@ -1,0 +1,296 @@
+import random
+
+# 1 Amadeirado - | |
+# 2 Especiaria -
+# 3 Aromático/Cítrico - | |
+# 4 Floral/Frutal -
+
+espacamento = "=" * 100
+avaliacoes = []
+acumulado = 0
+
+print(f'''\n                                         %%%%%%%%%                             
+                         %%%%%%%%%     %%%%    %%%%#                            
+                        %%%     %%%%  %%%       %%%%                            
+                        %%%       %%%%%%        %%%                             
+                         %%%        %%%%       ### ########                     
+                      %%%  %%%                ####       ##                     
+                      %%   #####                       #(                       
+                        #                          (((                          
+                            ###      ((         (((((                                                                   
+                                     ((                                          
+             ((   ((     ((( (((   ((((((  ((      ((   ((((  ((( (((            
+           (((     ((( (((     ((    ((    ((      ((  ((    ((     ((           
+           (((     ((( (((     ((,   ((    ((      ((  ((    ((     (((          
+           (((     (((   ((((((((,   ((      ((((((    ((     (((((((((\n
+                        +================================+
+                        |                                |
+                        |    Bem-vindo ao Natura Quiz!   |
+                        |                                |
+                        +================================+\n
++=================================================================================================================================================================+
+|                                                                                                                                                                 |
+|    Esse quiz tem como objetivo a partir de apenas cinco perguntas, selecionar o perfume com mais chances de sua aprovação, de acordo com sua personalidade!     |
+|                                                                                                                                                                 | 
+|                        Responda cada pergunta a partir da numeração das opções oferecidas, exemplos: [1] [2] [3] [4] [5]                                        |
+|                                                                                                                                                                 |
++=================================================================================================================================================================+\n                                                                            ''')
+
+continuar = 0
+
+while continuar == 0:
+
+    perguntas = 0
+    contador = 0
+    maior = 0
+    pergunta = 1
+    porcentagens = []
+    gen = [1, 2]
+    sugestoesmasculino = [[100, "Essencial Elixir [Amadeirado]","https://www.fragrantica.com.br/perfume/Natura/Essencial-Elixir-48586.html","Essencial Elixir de Natura é um perfume Amadeirado Masculino. Essencial Elixir foi lançada em 2017.\nO perfumista que assina esta fragrância é Verônica Kato.\nAs notas de topo são: Cardamomo, Pimenta Rosa, Pimenta Preta, Mandarina, Toranja, Cassis, Sálvia, Junípero ou zimbro e Limão.\nAs notas de coração são: Couro, Lavanda, Violeta e Gerânio.\nAs notas de fundo são: Conhaque, Baunilha, Benjoim, Sândalo, Vetiver, Almíscar, Cedro, Patchouli e Musgo de Carvalho."],[100, "Kayak Pulso [Especiarias]","https://www.natura.com.br/p/kaiak-pulso-masculino-desodorante-colonia-100-ml/108403","Um frescor energético e impactante. Notas aquosas, ervas, especiarias frescas, sândalo e cedro pulsam na composição desta fragrância."],[100, "Horus [Cítrico]","https://www.natura.com.br/p/horus-desodorante-colonia-masculino-100-ml/71224?listTitle=brand%20page%20list%20showcase%20-%20horus&position=1","Esta fragrância é uma combinação refrescante de notas amadeiradas do patchouli com o cítrico do Limão e Bergamota.\nRevigorante de forte personalidade. Para você que gosta de se perfumar em abundância."],[100, "Essencial Unico [Floral]","https://www.natura.com.br/p/essencial-unico-deo-parfum-masculino-90-ml/103348","Envolvida pelo coração do Vetiver na sua forma mais nobre.\nEssencial Único passa por um processo de purificação que destaca suas notas mais ricas e envolventes."]]
+    sugestoesfeminino = [[100, "Essencial Elixir [Amadeirado]","https://www.natura.com.br/p/deo-parfum-essencial-elixir-feminino-100ml/95557?listTitle=category%20page%20list%20showcase%20-%20tudo%20em%20lancamentos&position=9","Uma poderosa combinação de flor de muguet e bergamota com notas amadeiradas de patchouli e um toque inusitado de pripioca, ingrediente natural da biodiversidade brasileira.\nUma fragrância chipre que exala sofisticação e feminilidade."],[100, "Luna Valentia [Especiarias]","https://www.natura.com.br/p/deo-parfum-luna-valentia-50ml/10416?listTitle=search%20results%20list%20showcase%20-%20%22fragranciachipre%22&position=5","Luna Valentia se inspira na coragem existente em cada mulher e celebra a liberdade de se desamarrar das demandas impostas, para traçar seus próprios caminhos.\nUma interpretação única do chipre brasileiro que combina a inédita flor da metamorfose com a potência do patchouli e a preciosa priprioca, ingrediente da biodiversidade brasileira.\nSaída: pêra, morango, cassis, amora, mandarina, pimenta rosa.\nCorpo: muguet, rosa, jasmim, acorde flor de metamorfose\nFundo: musk, complexo âmbarado, tonka, musgo, patchouli."],[100, "Luna Radiante [Cítrico]","https://www.natura.com.br/p/luna-radiante-desodorante-colonia-75-ml/2550","Em Luna Radiante, o chipre brasileiro, acorde exclusivode Luna ganha luminosidade com notas cítricas intensas.\nUma fragrância sensual e vibrante com o toque douradoda flor da paramela e enriquecida com priprioca, ingredientenatural da biodiversidade brasileira.\nSaída: laranja-amarga, mandarina e pimenta-rosa.\nCorpo: muguet, jasmim-sambac e paramela.\nFundo: patchouli, musgo e priprioca"],[100, "Ekos Frescor Pataqueira [Floral]","https://www.natura.com.br/p/ekos-frescor-pataqueira-desodorante-colonia-feminino-150-ml/110645","Dos igarapés amazônicos nasce a pataqueira, de seu cheiro nasce um frescor alegre com nuances frutais e especiadas que dançam com um buquê floral verde, envolto por âmbar.\nUma fragrância vibrante, floral e verde para alegrar os seus dias."]]
+
+    identidade = int(input(
+        f"\n\n(|{pergunta}|) Qual a sua identidade de gênero?\n\n[1][Homem cisgênero]\n[2][Mulher cisgênero]\n[3][Homem trans]\n[4][Mulher trans]\n[5][Não-binário]\n\n(|{pergunta}|) Resposta: "))
+
+    while identidade == 0 or identidade > 5:
+        identidade = int(input(
+            f"\n{espacamento}\n(|{pergunta}|) Refazendo a pergunta, digite uma opção válida (1, 2, 3, 4 ou 5). Qual a sua identidade de gênero?\n\n[1][Homem cisgênero]\n[2][Mulher cisgênero]\n[3][Homem trans]\n[4][Mulher trans]\n[5][Não-binário]\n\n(|{pergunta}|) Resposta: "))
+
+    if identidade == 1 or identidade == 2:
+        identidade = identidade
+    elif identidade == 3:
+        identidade = gen[0]
+    elif identidade == 4:
+        identidade = gen[1]
+    else:
+        identidade = gen[random.randint(0, 1)]
+
+    while perguntas < 4:
+
+        #print(sugestoesmasculino[0][0])
+        #print(sugestoesmasculino[1][0])
+        #print(sugestoesmasculino[2][0])
+        #print(sugestoesmasculino[3][0])
+
+        pergunta += 1
+
+        pergunta1 = int(input(
+            f'''\n{espacamento}\n\n(|{pergunta}|) Qual parte do corpo gosta de perfumar mais?\n\n[1][Cabeça, pescoço e nuca]\n[2][Tronco, costas e abdômen]\n[3][Coxas e quadril]\n[4][Pés e panturrilhas]\n\n(|{pergunta}|) Resposta: '''))
+        while pergunta1 == 0 or pergunta1 > 4:
+            pergunta1 = int(input(f'''\n{espacamento}\n(|{pergunta}|) Refazendo a pergunta, digite uma opção válida (1, 2, 3 ou 4). Qual parte do corpo gosta de perfumar mais?\n\n[1][Cabeça]\n[2][Tronco]\n[3][Pernas]\n[4][Pés]\n\n(|{pergunta}|) Resposta: \n'''))
+
+        perguntas += 1
+        pergunta += 1
+
+        if pergunta1 == 1:
+            # Som de florestas - vento - madeira - porta
+            sugestoesmasculino[1][0] *= (90 / 100)
+            sugestoesmasculino[2][0] *= (85 / 100)
+            sugestoesmasculino[3][0] *= (95 / 100)
+
+        elif pergunta1 == 2:
+            # Som de alimentos cortados - fogo - violino
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+            sugestoesmasculino[3][0] *= (85 / 100)
+
+        elif pergunta1 == 3:
+            # Sons de borrifamento, esmagamento de frutas
+            sugestoesmasculino[0][0] *= (85 / 100)
+            sugestoesmasculino[1][0] *= (95 / 100)
+            sugestoesmasculino[3][0] *= (90 / 100)
+
+        else:
+            # Sons de passáros, arbustos
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[1][0] *= (85 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+
+        #print(sugestoesmasculino[0][0])
+        #print(sugestoesmasculino[1][0])
+        #print(sugestoesmasculino[2][0])
+        #print(sugestoesmasculino[3][0])
+
+        pergunta2 = int(input(
+            f"\n{espacamento}\n\n(|{pergunta}|) Qual palavra lhe remete ao melhor olfato?\n\n[1][Estabelecimentos limpos e produtos novos]\n[2][Alimentos]\n[3][Campos e natureza]\n[4][Flores]\n\n(|{pergunta}|) Resposta: "))
+        while pergunta2 == 0 or pergunta2 > 4:
+            pergunta2 = int(input(
+                f"\n{espacamento}\n\n(|{pergunta}|) Refazendo a pergunta, digite uma opção válida (1, 2, 3 ou 4). Qual palavra lhe remete ao melhor olfato?\n\n[1][Estabelecimentos limpos e produtos novos]\n[2][Alimentos]\n[3][Campos e natureza]\n[4][Flores]\n\n(|{pergunta}|) Resposta: "))
+
+        perguntas += 1
+        pergunta += 1
+
+        if pergunta2 == 1:
+            # Som de florestas e madeira
+            sugestoesmasculino[1][0] *= (90 / 100)
+            sugestoesmasculino[2][0] *= (85 / 100)
+            sugestoesmasculino[3][0] *= (95 / 100)
+
+        elif pergunta2 == 2:
+            # Som de alimentos cortados, fogão, fogo
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+            sugestoesmasculino[3][0] *= (85 / 100)
+
+        elif pergunta2 == 3:
+            # Sons de borrifamento, esmagamento (tipo esmagando laranja)
+            sugestoesmasculino[0][0] *= (90 / 100)
+            sugestoesmasculino[1][0] *= (95 / 100)
+            sugestoesmasculino[3][0] *= (85 / 100)
+
+        else:
+            # Sons de passáros, arbustos
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[1][0] *= (85 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+
+        #print(sugestoesmasculino[0][0])
+        #print(sugestoesmasculino[1][0])
+        #print(sugestoesmasculino[2][0])
+        #print(sugestoesmasculino[3][0])
+
+        pergunta3 = int(input(
+            f"\n{espacamento}\n\n(|{pergunta}|) Para qual local costuma sair mais?\n\n[1][Espetáculos e eventos]\n[2][Restaurantes e shoppings]\n[3][Baladas]\n[4][Parques]\n\n(|{pergunta}|) Resposta: "))
+        while pergunta3 == 0 or pergunta3 > 4:
+            pergunta3 = int(input(
+                f"\n{espacamento}\n\n(|{pergunta}|) Refazendo a pergunta, digite uma opção válida (1, 2, 3 ou 4). Para qual local costuma sair mais?\n\n[1][Espetáculos e eventos]\n[2][Restaurantes e shoppings]\n[3][Baladas]\n[4][Parques]\n\n(|{pergunta}|) Resposta: "))
+
+        perguntas += 1
+        pergunta += 1
+
+        if pergunta3 == 1:
+            # Som de florestas e madeira
+            sugestoesmasculino[1][0] *= (90 / 100)
+            sugestoesmasculino[2][0] *= (85 / 100)
+            sugestoesmasculino[3][0] *= (95 / 100)
+
+        elif pergunta3 == 2:
+            # Som de alimentos cortados, fogão, fogo
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+            sugestoesmasculino[3][0] *= (85 / 100)
+
+        elif pergunta3 == 3:
+            # Sons de borrifamento, esmagamento (tipo esmagando laranja)
+            sugestoesmasculino[0][0] *= (85 / 100)
+            sugestoesmasculino[1][0] *= (95 / 100)
+            sugestoesmasculino[3][0] *= (90 / 100)
+
+        else:
+            # Sons de passáros, arbustos
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[1][0] *= (85 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+
+        #print(sugestoesmasculino[0][0])
+        #print(sugestoesmasculino[1][0])
+        #print(sugestoesmasculino[2][0])
+        #print(sugestoesmasculino[3][0])
+
+        pergunta4 = int(input(
+            f"\n{espacamento}\n\n(|{pergunta}|) Qual a intensidade desejada da fragância?\n\n[1][Forte]\n[2][Suave]\n[3][Moderado]\n[4][Leve]\n\n(|{pergunta}|) Resposta: "))
+        while pergunta4 == 0 or pergunta4 > 4:
+            pergunta4 = int(input(
+                f"\n{espacamento}\n\n(|{pergunta}|) Refazendo a pergunta, digite uma opção válida (1, 2, 3 ou 4). Qual a intensidade desejada da fragância?\n\n[1][Forte]\n[2][Suave]\n[3][Moderado]\n[4][Leve]\n\n(|{pergunta}|) Resposta: "))
+
+        perguntas += 1
+        pergunta += 1
+
+        if pergunta4 == 1:
+            # Som de florestas e madeira
+            sugestoesmasculino[1][0] *= (90 / 100)
+            sugestoesmasculino[2][0] *= (85 / 100)
+            sugestoesmasculino[3][0] *= (95 / 100)
+
+        elif pergunta4 == 2:
+            # Som de alimentos cortados, fogão, fogo
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+            sugestoesmasculino[3][0] *= (85 / 100)
+
+        elif pergunta4 == 3:
+            # Sons de borrifamento, esmagamento (tipo esmagando laranja)
+            sugestoesmasculino[0][0] *= (85 / 100)
+            sugestoesmasculino[1][0] *= (95 / 100)
+            sugestoesmasculino[3][0] *= (90 / 100)
+
+        else:
+            # Sons de passáros, arbustos
+            sugestoesmasculino[0][0] *= (95 / 100)
+            sugestoesmasculino[1][0] *= (85 / 100)
+            sugestoesmasculino[2][0] *= (90 / 100)
+
+        while contador != 4:
+            porcentagens.append(sugestoesmasculino[contador][0])
+
+            if (sugestoesmasculino[contador][0]) > maior:
+                maior = (sugestoesmasculino[contador][0])
+                posicao = contador
+
+            contador += 1
+
+        print(sugestoesmasculino[0][0], sugestoesfeminino[0][1])
+        print(sugestoesmasculino[1][0], sugestoesfeminino[1][1])
+        print(sugestoesmasculino[2][0], sugestoesfeminino[2][1])
+        print(sugestoesmasculino[3][0], sugestoesfeminino[3][1])
+
+        if identidade == 1:
+            print(f"\n{espacamento}\nO seu perfume escolhido é o mais novo {sugestoesmasculino[posicao][1]}, com uma combinação de {sugestoesmasculino[posicao][0]}%!\n\nLink para visualização e compra: {sugestoesmasculino[posicao][2]}\n\nOutras informações:\n{sugestoesmasculino[posicao][3]}")
+        else:
+            print(f"\n{espacamento}\nO seu perfume escolhido é o mais novo {sugestoesfeminino[posicao][1]}, com uma combinação de {sugestoesmasculino[posicao][0]}%!\n\nLink para visualização e compra: {sugestoesfeminino[posicao][2]}\n\nOutras informações:\n{sugestoesfeminino[posicao][3]}")
+
+        nota = (int(input(
+            f"\n{espacamento}\nDe 0 a 10, o quanto gostou da fragância definida pelo quiz?\n\nResposta da avaliação: ")))
+
+        while nota > 10:
+            nota = (int(input("\nDê uma nota de 0 até 10.\n\nResposta da avaliação: ")))
+        avaliacoes.append(nota)
+        continuar = int(input("\nDeseja continuar? [0] Sim - [1] Não: "))
+
+for avaliacao in avaliacoes:
+    acumulado += avaliacao
+
+print(f'''\n{espacamento}
+|                             Dados do programa nessa execução:                                    |
+|                                                                                                  |
+                                 Assertividade: {(acumulado / len(avaliacoes) * 10)}%                                        
+                                 Clientes na amostra: {len(avaliacoes)}             
+|                                                                                                  |                                
+{espacamento}
+                                      .::------::.                                  
+                                :-+*#%%#********#%%#*+-:                            
+                            .=*##*=-::::::----:::.::-=*##*=.                        
+                         .=#%#=:.:-=++++=============-:.:=#%#=.                     
+                       .+%#=::-++++++++==================-.:=#%+:                   
+                     .+%#-.-+++++++++=======================:.-#%+.                 
+                    =##=.-++++++++++==========================:.=##=                
+                   *%*.:+++++++++++============================-..*%*               
+                  *%+ =+++++++++++=============================--: +%#.             
+                 *%+ =+++++++++++=============================----- +%*             
+                +%* =****++++++==+****+++++++++++=========+++++==--: *%+            
+               .%%::+#%%%%*+++===#%%%%%%%%%%%%%%%%#*==+##%%%%%%%%#*=..%%:           
+               +%* ++#%%%%%#*+===#%%%%%%%%%****##%%%%#%%%%##**##%%%*- *%+           
+               #%-.++#%%%%%%%#+==#%%%%%%%%%=====+%%%%%%%#+=----=+*=--.-%#           
+               %%::++#%%%%#%%%%*+#%%%%%%%%%=====+%%%%%%#=------------.:%%.          
+              .%%::++#%%%%+#%%%%##%%%%%%%%%#####%%%%%%%#-------+####-.:%%.          
+               #%-:++#%%%%+=+#%%%%%%%%%%%%%%%%%%%%##%%%%+------+%%%%-.-%#           
+               *%+ ++#%%%%====*#%%%%%##%%%%===*%%%%###%%%#+====*%%%%- +%*           
+               :%#.-+#%%%%=====+#%%#:  :#%%====+#%%-  .*%%%%%%%%%%%#:.#%-           
+                *%+ =*****=======+*+.  .+**======**.  .=**#####**+=- +%*            
+                .#%=.================--==========------------------ -%#.            
+                 .#%-.=========================------------------- -%#:             
+                  .#%+ -======================------------------: +%#.              
+                    +%#:.====================------------------.:*%*.               
+                     -#%+..-================----------------:..+%#-                 
+                       =#%*:.:============----------------:.:*%#=                   
+                         -*%#+:.:-=======-------------:..:+#%*-                     
+                           .-*##*=-:..::-------:::..:-=*##*-.                       
+                               :=+#%##*+========+*##%#+=:                           
+                                    .:-==++++++==-:.                                
+
+     ██████╗ ██╗   ██╗██╗███████╗    ██████╗ ██╗   ██╗    ███╗   ██╗ ██████╗ ██████╗ 
+    ██╔═══██╗██║   ██║██║╚══███╔╝    ██╔══██╗╚██╗ ██╔╝    ████╗  ██║██╔════╝ ██╔══██╗
+    ██║▄▄ ██║██║   ██║██║ ███╔╝      ██╔═██═╗   ╚██╔╝     ██║╚██╗██║██║   ██║██╔██╗
+    ╚██████╔╝╚██████╔╝██║███████╗    ██████╔╝   ██║       ██║ ╚████║╚██████╔╝██║  ██║
+     ╚══▀▀═╝  ╚═════╝ ╚═╝╚══════╝    ╚═════╝    ╚═╝       ╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝
+                               All Rights Reserved - 2023 © ''')
